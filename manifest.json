@@ -1,0 +1,27 @@
+{
+  "name": "حاسبة الإيجار",
+  "short_name": "حاسبة الإيجار",
+  "description": "حاسبة الإيجار الجديد بالزيادة السنوية، وحاسبة إيجار القانون القديم، في تطبيق واحد",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f6f2",
+  "theme_color": "#185fa5",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
