@@ -838,14 +838,15 @@ function applyTheme(theme) {
   darkToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 
-const savedTheme = localStorage.getItem('rentCalcTheme');
+let savedTheme = null;
+try { savedTheme = localStorage.getItem('rentCalcTheme'); } catch (e) {}
 applyTheme(savedTheme === 'light' ? 'light' : 'dark');
 
 darkToggle.addEventListener('click', () => {
   const isDark = document.body.classList.contains('dark');
   const newTheme = isDark ? 'light' : 'dark';
   applyTheme(newTheme);
-  localStorage.setItem('rentCalcTheme', newTheme);
+  try { localStorage.setItem('rentCalcTheme', newTheme); } catch (e) {}
 });
 
 function showError(msg) {
@@ -1001,13 +1002,14 @@ function applyTheme(theme) {
   document.body.classList.toggle('dark', theme === 'dark');
   darkToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
-const savedTheme = localStorage.getItem('oldRentTheme');
+let savedTheme = null;
+try { savedTheme = localStorage.getItem('oldRentTheme'); } catch (e) {}
 applyTheme(savedTheme === 'light' ? 'light' : 'dark');
 darkToggle.addEventListener('click', () => {
   const isDark = document.body.classList.contains('dark');
   const newTheme = isDark ? 'light' : 'dark';
   applyTheme(newTheme);
-  localStorage.setItem('oldRentTheme', newTheme);
+  try { localStorage.setItem('oldRentTheme', newTheme); } catch (e) {}
 });
 
 const fieldOrder = ['oldContractDate', 'oldStartRent'];
@@ -1176,7 +1178,14 @@ calcBtn.addEventListener('click', () => {
 })();
 
 (function() {
-  const SITE_URL = 'https://mohamady-lawyer.github.io/rent-calculator-combined/';
+  // رابط المشاركة: الافتراضي رابط GitHub، ولو الصفحة مفتوحة داخل بلوجر بيوصلها ?share=رابط البلوج
+  let SITE_URL = 'https://mohamady-lawyer.github.io/rent-calculator-combined/';
+  try {
+    const shareParam = new URLSearchParams(location.search).get('share');
+    if (shareParam && /^https:\/\/[a-z0-9-]+\.blogspot\.com\/?$/i.test(shareParam)) {
+      SITE_URL = shareParam.endsWith('/') ? shareParam : shareParam + '/';
+    }
+  } catch (e) {}
   const shareBtn = document.getElementById('shareBtn');
   const shareMenu = document.getElementById('shareMenu');
   const copyLinkBtn = document.getElementById('copyLinkBtn');
