@@ -376,12 +376,20 @@ body.dark {
 
 /* ===== Welcome / entry screen ===== */
 .welcome-screen {
-  min-height: 100vh;
+  /* الـ body فيه padding 16px فوق وتحت، فبنطرحهم عشان ما يظهرش سكرول */
+  min-height: calc(100vh - 32px);
+  min-height: calc(100dvh - 32px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 8px 16px;
 }
+
+html, body {
+  overflow-x: hidden;
+}
+
+
 
 .welcome-inner {
   width: 100%;
@@ -573,7 +581,7 @@ body.dark {
   box-shadow: 0 0 16px var(--result-border);
 }
 
-/* ===== Share button (welcome screen only) ===== */
+/* ===== Share button (all screens) ===== */
 .share-wrap {
   position: absolute;
   top: 14px;
@@ -581,23 +589,31 @@ body.dark {
   z-index: 30;
 }
 
+.share-wrap.inline {
+  position: relative;
+  top: auto;
+  left: auto;
+  flex-shrink: 0;
+}
+
 .share-btn {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--icon-border);
   background: var(--icon-bg);
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 12px;
   color: var(--icon-color);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .share-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -612,9 +628,9 @@ body.dark {
 
 .share-menu {
   position: absolute;
-  top: 38px;
+  top: 50px;
   left: 0;
-  min-width: 170px;
+  min-width: 200px;
   background: var(--card-grad-1);
   border: 1px solid var(--gold);
   border-radius: 10px;
@@ -622,7 +638,7 @@ body.dark {
   display: none;
   flex-direction: column;
   gap: 4px;
-  z-index: 20;
+  z-index: 40;
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
@@ -633,12 +649,12 @@ body.dark {
 .share-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
+  gap: 10px;
+  padding: 11px 12px;
   border: none;
   background: transparent;
   color: var(--text-color);
-  font-size: 13px;
+  font-size: 15px;
   font-family: inherit;
   border-radius: 7px;
   cursor: pointer;
@@ -651,8 +667,8 @@ body.dark {
 }
 
 .share-item svg {
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -662,7 +678,7 @@ body.dark {
 }
 
 .share-copied {
-  font-size: 11px;
+  font-size: 12px;
   color: #3dd68c;
   text-align: center;
   padding: 2px 0 4px;
@@ -673,6 +689,31 @@ body.dark {
   display: block;
 }
 
+
+/* على الشاشات القصيرة نضغط المسافات شوية عشان الشاشة الرئيسية تتعرض كلها بدون سكرول */
+@media (max-height: 640px) {
+  .welcome-icon { font-size: 40px; margin-bottom: 4px; }
+  .welcome-title { margin-bottom: 12px; }
+  .welcome-credit { margin-bottom: 6px; }
+  .welcome-screen .lawyer-box { padding: 12px; margin-bottom: 12px; }
+  .contact-btn { padding: 10px 6px; }
+  .entry-btn { padding: 12px 14px; }
+}
+
+@media (max-height: 580px) {
+  .welcome-icon { font-size: 32px; margin-bottom: 2px; }
+  .welcome-title { font-size: 20px; margin-bottom: 8px; }
+  .welcome-credit { font-size: 14px; margin-bottom: 4px; }
+  .welcome-screen .lawyer-box { padding: 8px 12px; margin-bottom: 8px; }
+  .welcome-screen .lawyer-name { font-size: 20px; margin-bottom: 4px; }
+  .welcome-screen .lawyer-phone { font-size: 18px; }
+  .welcome-screen .lawyer-title { margin-bottom: 4px; }
+  .contact-btn { padding: 8px 6px; font-size: 16px; gap: 2px; }
+  .contact-btn svg { width: 24px; height: 24px; }
+  .entry-btn { padding: 9px 14px; }
+  .entry-btn-main { font-size: 18px; }
+  .entry-btn-sub { font-size: 13px; }
+}
 </style>
 </head>
 <body class="dark">
@@ -681,19 +722,19 @@ body.dark {
 <div id="welcomeScreen" class="welcome-screen">
   <div class="welcome-inner" style="position: relative;">
     <div class="share-wrap">
-      <button id="shareBtn" class="share-btn" title="مشاركة">
+      <button class="share-btn" type="button" title="مشاركة" aria-label="مشاركة">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
       </button>
-      <div id="shareMenu" class="share-menu">
-        <button id="copyLinkBtn" class="share-item" type="button">
+      <div class="share-menu">
+        <button class="share-item copy-link-btn" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           نسخ الرابط
         </button>
-        <a id="shareWaBtn" class="share-item" href="#" target="_blank" rel="noopener">
+        <a class="share-item share-wa-btn" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
           مشاركة عبر واتساب
         </a>
-        <div id="shareCopied" class="share-copied">تم النسخ</div>
+        <div class="share-copied">تم النسخ</div>
       </div>
     </div>
     <div class="welcome-icon">⚖️</div>
@@ -737,6 +778,22 @@ body.dark {
     <span class="page-title">حاسبة الإيجار</span>
     <div class="header-btns">
       <button id="darkToggle" class="icon-btn" title="الوضع الليلي">☀️</button>
+    </div>
+    <div class="share-wrap inline">
+      <button class="share-btn" type="button" title="مشاركة" aria-label="مشاركة">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+      </button>
+      <div class="share-menu">
+        <button class="share-item copy-link-btn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          نسخ الرابط
+        </button>
+        <a class="share-item share-wa-btn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          مشاركة عبر واتساب
+        </a>
+        <div class="share-copied">تم النسخ</div>
+      </div>
     </div>
   </div>
 
@@ -801,6 +858,22 @@ body.dark {
     <span class="page-title">حاسبة الإيجار القديم</span>
     <div class="header-btns">
       <button id="oldDarkToggle" class="icon-btn" title="الوضع الليلي">☀️</button>
+    </div>
+    <div class="share-wrap inline">
+      <button class="share-btn" type="button" title="مشاركة" aria-label="مشاركة">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+      </button>
+      <div class="share-menu">
+        <button class="share-item copy-link-btn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          نسخ الرابط
+        </button>
+        <a class="share-item share-wa-btn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          مشاركة عبر واتساب
+        </a>
+        <div class="share-copied">تم النسخ</div>
+      </div>
     </div>
   </div>
 
@@ -1295,30 +1368,35 @@ calcBtn.addEventListener('click', () => {
     const fromReferrer = (window.self !== window.top && document.referrer) ? toBlogUrl(document.referrer) : null;
     SITE_URL = fromParam || fromReferrer || DEFAULT_SITE_URL;
   } catch (e) {}
-  const shareBtn = document.getElementById('shareBtn');
-  const shareMenu = document.getElementById('shareMenu');
-  const copyLinkBtn = document.getElementById('copyLinkBtn');
-  const shareWaBtn = document.getElementById('shareWaBtn');
-  const shareCopied = document.getElementById('shareCopied');
+  const shareWraps = document.querySelectorAll('.share-wrap');
+  const shareWaHref = 'https://wa.me/?text=' + encodeURIComponent('حاسبة الإيجار القديم - مبرمج لصالح أ/ أسامة محمدي\n' + SITE_URL);
 
-  if (shareBtn && shareMenu) {
-    shareWaBtn.href = 'https://wa.me/?text=' + encodeURIComponent('حاسبة الإيجار القديم - مبرمج لصالح أ/ أسامة محمدي\n' + SITE_URL);
+  function closeShareMenus(except) {
+    shareWraps.forEach((w) => {
+      if (w !== except) { w.querySelector('.share-menu').classList.remove('open'); }
+    });
+  }
 
-    shareBtn.addEventListener('click', (e) => {
+  shareWraps.forEach((wrap) => {
+    const btn = wrap.querySelector('.share-btn');
+    const menu = wrap.querySelector('.share-menu');
+    const copyBtn = wrap.querySelector('.copy-link-btn');
+    const waShare = wrap.querySelector('.share-wa-btn');
+    const copied = wrap.querySelector('.share-copied');
+
+    waShare.href = shareWaHref;
+    waShare.addEventListener('click', () => menu.classList.remove('open'));
+
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      shareMenu.classList.toggle('open');
+      closeShareMenus(wrap);
+      menu.classList.toggle('open');
     });
 
-    document.addEventListener('click', (e) => {
-      if (!shareMenu.contains(e.target) && e.target !== shareBtn) {
-        shareMenu.classList.remove('open');
-      }
-    });
-
-    copyLinkBtn.addEventListener('click', () => {
+    copyBtn.addEventListener('click', () => {
       const done = () => {
-        shareCopied.classList.add('show');
-        setTimeout(() => shareCopied.classList.remove('show'), 2000);
+        copied.classList.add('show');
+        setTimeout(() => copied.classList.remove('show'), 2000);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(SITE_URL).then(done).catch(done);
@@ -1332,7 +1410,14 @@ calcBtn.addEventListener('click', () => {
         done();
       }
     });
-  }
+  });
+
+  // أي ضغطة خارج القايمة (أو على أي زر تاني زي الرجوع) بتقفلها
+  document.addEventListener('click', (e) => {
+    shareWraps.forEach((w) => {
+      if (!w.contains(e.target)) { w.querySelector('.share-menu').classList.remove('open'); }
+    });
+  });
 
   const waBtn = document.getElementById('waBtn');
   if (!waBtn) return;
