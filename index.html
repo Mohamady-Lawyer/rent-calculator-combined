@@ -581,6 +581,42 @@ html, body {
   box-shadow: 0 0 16px var(--result-border);
 }
 
+/* ===== Gold divider between the main results and the comparison cards ===== */
+.gold-divider {
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 6px;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+}
+
+.gold-divider::before {
+  background: linear-gradient(to right, transparent, var(--gold));
+  box-shadow: 0 0 8px var(--result-border);
+}
+
+.gold-divider::after {
+  background: linear-gradient(to left, transparent, var(--gold));
+  box-shadow: 0 0 8px var(--result-border);
+}
+
+.gold-divider span {
+  direction: rtl;
+  unicode-bidi: isolate;
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
 /* ===== Share button (all screens) ===== */
 .share-wrap {
   position: absolute;
@@ -831,6 +867,8 @@ html, body {
       <p id="totalCollectedValue" class="result-value">—</p>
       <p id="totalCollectedSub" class="result-sub"></p>
     </div>
+
+    <div class="gold-divider" aria-hidden="true"><span>للمقارنة</span></div>
 
     <p class="section-label">إجمالي الأجرة بدون أي زيادة (حتى اليوم - للمقارنة)</p>
     <div class="result-box" style="margin-top:8px;">
