@@ -756,10 +756,11 @@ body.dark {
       <input type="number" id="increaseRate" step="any" placeholder="مثال: 15" inputmode="decimal">
     </div>
 
-    <button id="calcBtn" class="calc-btn">احسب الأجرة الحالية</button>
+    <button id="calcBtn" class="calc-btn">احسب الأجرة</button>
 
     <div id="errorBox" class="error-box" style="display:none;"></div>
 
+    <div id="newResultsWrap" class="hidden">
     <div class="result-box">
       <p class="result-label">الأجرة المستحقة حالياً</p>
       <p id="resultValue" class="result-value">—</p>
@@ -786,6 +787,7 @@ body.dark {
       <p class="result-label">لو ظلت الأجرة ثابتة حتى 31/8/2025</p>
       <p id="totalOldEndValue" class="result-value">—</p>
       <p id="totalOldEndSub" class="result-sub"></p>
+    </div>
     </div>
 
     <button id="newBackBottom" class="back-btn back-btn-bottom" title="رجوع للشاشة الرئيسية" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M13 5l7 7-7 7"/></svg></button>
@@ -909,6 +911,7 @@ const totalFlatValue = document.getElementById('totalFlatValue');
 const totalFlatSub = document.getElementById('totalFlatSub');
 const totalOldEndValue = document.getElementById('totalOldEndValue');
 const totalOldEndSub = document.getElementById('totalOldEndSub');
+const newResultsWrap = document.getElementById('newResultsWrap');
 
 function applyTheme(theme) {
   document.body.classList.toggle('dark', theme === 'dark');
@@ -989,6 +992,7 @@ fieldOrder.forEach((id, index) => {
 
 calcBtn.addEventListener('click', () => {
   clearError();
+  newResultsWrap.classList.add('hidden');
 
   const dateStr = document.getElementById('contractDate').value;
   const startRentStr = document.getElementById('startRent').value;
@@ -1068,6 +1072,8 @@ calcBtn.addEventListener('click', () => {
     totalOldEndValue.textContent = '—';
     totalOldEndSub.textContent = 'تاريخ التعاقد بعد 31/8/2025، أي بعد بدء العمل بالقانون الجديد';
   }
+
+  newResultsWrap.classList.remove('hidden');
 });
 
 
