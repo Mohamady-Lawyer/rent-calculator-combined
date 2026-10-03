@@ -767,18 +767,25 @@ body.dark {
       <p id="lastIncreaseDate" class="result-sub"></p>
     </div>
 
-    <p class="section-label">إجمالي الأجرة المحصلة (مع الزيادة السنوية)</p>
+    <p class="section-label">إجمالي الأجرة المحصلة (مع الزيادة السنوية حتى اليوم)</p>
     <div class="result-box" style="margin-top:8px;">
       <p class="result-label">من بداية التعاقد حتى اليوم</p>
       <p id="totalCollectedValue" class="result-value">—</p>
       <p id="totalCollectedSub" class="result-sub"></p>
     </div>
 
-    <p class="section-label">إجمالي الأجرة بدون أي زيادة (للمقارنة)</p>
+    <p class="section-label">إجمالي الأجرة بدون أي زيادة (حتى اليوم - للمقارنة)</p>
     <div class="result-box" style="margin-top:8px;">
       <p class="result-label">لو ظلت الأجرة ثابتة طوال المدة</p>
       <p id="totalFlatValue" class="result-value">—</p>
       <p id="totalFlatSub" class="result-sub"></p>
+    </div>
+
+    <p class="section-label">إجمالي الأجرة بدون أي زيادة (حتى آخر شهر لتطبيق الأجرة القديمة للمقارنة)</p>
+    <div class="result-box" style="margin-top:8px;">
+      <p class="result-label">لو ظلت الأجرة ثابتة حتى 31/8/2025</p>
+      <p id="totalOldEndValue" class="result-value">—</p>
+      <p id="totalOldEndSub" class="result-sub"></p>
     </div>
 
     <button id="newBackBottom" class="back-btn back-btn-bottom" title="رجوع للشاشة الرئيسية" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M13 5l7 7-7 7"/></svg></button>
@@ -900,6 +907,8 @@ const totalCollectedValue = document.getElementById('totalCollectedValue');
 const totalCollectedSub = document.getElementById('totalCollectedSub');
 const totalFlatValue = document.getElementById('totalFlatValue');
 const totalFlatSub = document.getElementById('totalFlatSub');
+const totalOldEndValue = document.getElementById('totalOldEndValue');
+const totalOldEndSub = document.getElementById('totalOldEndSub');
 
 function applyTheme(theme) {
   document.body.classList.toggle('dark', theme === 'dark');
@@ -1044,6 +1053,21 @@ calcBtn.addEventListener('click', () => {
     maximumFractionDigits: 2
   }) + ' جنيه';
   totalFlatSub.textContent = 'عن ' + totalMonths + ' شهر بأجرة ثابتة ' + startRent + ' جنيه';
+
+  // إجمالي الأجرة الثابتة حتى آخر شهر قبل بدء العمل بالقانون الجديد (أغسطس 2025 شاملاً)
+  const oldLawEnd = new Date(2025, 7, 31);
+  const monthsToOldEnd = calcFullMonthsIncludingCurrent(startDate, oldLawEnd);
+  if (monthsToOldEnd > 0) {
+    const totalOldEnd = startRent * monthsToOldEnd;
+    totalOldEndValue.textContent = totalOldEnd.toLocaleString('ar-EG', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }) + ' جنيه';
+    totalOldEndSub.textContent = 'عن ' + monthsToOldEnd + ' شهر بأجرة ثابتة ' + startRent + ' جنيه';
+  } else {
+    totalOldEndValue.textContent = '—';
+    totalOldEndSub.textContent = 'تاريخ التعاقد بعد 31/8/2025، أي بعد بدء العمل بالقانون الجديد';
+  }
 });
 
 
