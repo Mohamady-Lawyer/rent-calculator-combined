@@ -113,14 +113,58 @@ body.dark {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
 .page-title {
+  flex: 1;
   font-size: 15.5px;
   font-weight: 700;
   color: var(--title-color);
   letter-spacing: 0.02em;
+}
+
+/* ===== Big back arrow (top and bottom of calculator screens) ===== */
+.back-btn {
+  width: 22%;
+  min-width: 70px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  box-shadow: 0 0 16px var(--result-border);
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.back-btn:hover {
+  opacity: 0.92;
+}
+
+.back-btn:active {
+  transform: translateY(1px);
+}
+
+.back-btn-bottom {
+  width: 100%;
+  height: 46px;
+  margin-top: 18px;
 }
 
 .icon-btn {
@@ -346,28 +390,46 @@ body.dark {
 }
 
 .welcome-icon {
-  font-size: 44px;
+  font-size: 54px;
   margin-bottom: 10px;
   filter: drop-shadow(0 0 14px rgba(212, 175, 55, 0.35));
 }
 
 .welcome-title {
-  font-size: 19px;
+  font-size: 23px;
   font-weight: 700;
   color: var(--title-color);
-  margin: 0 0 26px;
+  margin: 0 0 22px;
   letter-spacing: 0.02em;
 }
 
 .welcome-credit {
-  font-size: 12px;
+  font-size: 16px;
   color: var(--muted);
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   letter-spacing: 0.04em;
 }
 
 .welcome-screen .lawyer-box {
   margin-bottom: 22px;
+  padding: 20px 12px;
+  border-radius: 14px;
+}
+
+.welcome-screen .lawyer-name {
+  font-size: 23px;
+  margin-bottom: 8px;
+}
+
+.welcome-screen .lawyer-title {
+  font-size: clamp(11px, 3.6vw, 14px);
+  font-weight: 700;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
+.welcome-screen .lawyer-phone {
+  font-size: 21px;
 }
 
 .enter-btn {
@@ -383,7 +445,7 @@ body.dark {
 
 .entry-btn {
   width: 100%;
-  padding: 16px 14px;
+  padding: 18px 14px;
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
   color: #ffffff;
   border: none;
@@ -404,13 +466,13 @@ body.dark {
 
 .entry-btn-main {
   display: block;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
 }
 
 .entry-btn-sub {
   display: block;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 400;
   opacity: 0.85;
   margin-top: 4px;
@@ -471,10 +533,10 @@ body.dark {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 14px 8px;
+  padding: 16px 6px;
   color: #ffffff;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   border: none;
   border-radius: 12px;
@@ -484,8 +546,8 @@ body.dark {
 }
 
 .contact-btn svg {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   fill: none;
   stroke: #ffffff;
   stroke-width: 2;
@@ -637,7 +699,7 @@ body.dark {
     <div class="welcome-icon">⚖️</div>
     <h1 class="welcome-title">حاسبة الإيجار</h1>
 
-    <p class="welcome-credit">مبرمج ومصمم لصالح</p>
+    <p class="welcome-credit">مبرمج لصالح</p>
 
     <div class="lawyer-box">
       <div class="lawyer-name">أسامة محمدي</div>
@@ -671,11 +733,11 @@ body.dark {
 <!-- ============ NEW RENT CALCULATOR ============ -->
 <div id="newCalcScreen" class="container hidden">
   <div class="page-header">
+    <button id="homeBtn" class="back-btn" title="رجوع للشاشة الرئيسية" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M13 5l7 7-7 7"/></svg></button>
+    <span class="page-title">حاسبة الإيجار</span>
     <div class="header-btns">
-      <button id="homeBtn" class="icon-btn" title="الشاشة الرئيسية">🏠</button>
       <button id="darkToggle" class="icon-btn" title="الوضع الليلي">☀️</button>
     </div>
-    <span class="page-title">حاسبة الإيجار</span>
   </div>
 
   <div class="card">
@@ -718,17 +780,19 @@ body.dark {
       <p id="totalFlatValue" class="result-value">—</p>
       <p id="totalFlatSub" class="result-sub"></p>
     </div>
+
+    <button id="newBackBottom" class="back-btn back-btn-bottom" title="رجوع للشاشة الرئيسية" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M13 5l7 7-7 7"/></svg></button>
   </div>
 </div>
 
 <!-- ============ OLD RENT CALCULATOR ============ -->
 <div id="oldCalcScreen" class="container hidden">
   <div class="page-header">
+    <button id="oldHomeBtn" class="back-btn" title="رجوع للشاشة الرئيسية" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M13 5l7 7-7 7"/></svg></button>
+    <span class="page-title">حاسبة الإيجار القديم</span>
     <div class="header-btns">
-      <button id="oldHomeBtn" class="icon-btn" title="الشاشة الرئيسية">🏠</button>
       <button id="oldDarkToggle" class="icon-btn" title="الوضع الليلي">☀️</button>
     </div>
-    <span class="page-title">حاسبة الإيجار القديم</span>
   </div>
 
 <div class="card">
@@ -783,6 +847,8 @@ body.dark {
         <p id="oldNextRentSub" class="result-sub"></p>
       </div>
     </div>
+
+    <button id="oldBackBottom" class="back-btn back-btn-bottom" title="رجوع للشاشة الرئيسية" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M13 5l7 7-7 7"/></svg></button>
   </div></div>
 
 <script>
@@ -818,6 +884,8 @@ body.dark {
   enterOldBtn.addEventListener('click', showOldCalc);
   homeBtn.addEventListener('click', showWelcome);
   oldHomeBtn.addEventListener('click', showWelcome);
+  document.getElementById('newBackBottom').addEventListener('click', showWelcome);
+  document.getElementById('oldBackBottom').addEventListener('click', showWelcome);
 })();
 
 (function() {
@@ -1178,13 +1246,24 @@ calcBtn.addEventListener('click', () => {
 })();
 
 (function() {
-  // رابط المشاركة: الافتراضي رابط GitHub، ولو الصفحة مفتوحة داخل بلوجر بيوصلها ?share=رابط البلوج
-  let SITE_URL = 'https://mohamady-lawyer.github.io/rent-calculator-combined/';
+  // رابط المشاركة: الافتراضي رابط GitHub، ولو الصفحة مفتوحة داخل بلوجر بنستخدم رابط البلوج
+  const DEFAULT_SITE_URL = 'https://mohamady-lawyer.github.io/rent-calculator-combined/';
+
+  // بيحوّل أي رابط blogspot (http أو https، أو بدولة مثل .com.eg، أو بمسار) لشكل موحد https://اسم.blogspot.com/
+  function toBlogUrl(raw) {
+    try {
+      const u = new URL(raw);
+      const host = u.hostname.toLowerCase().replace(/\.blogspot\.(?:com\.[a-z]{2}|co\.[a-z]{2}|[a-z]{2,3})$/, '.blogspot.com');
+      if (/^[a-z0-9-]+\.blogspot\.com$/.test(host)) return 'https://' + host + '/';
+    } catch (e) {}
+    return null;
+  }
+
+  let SITE_URL = DEFAULT_SITE_URL;
   try {
-    const shareParam = new URLSearchParams(location.search).get('share');
-    if (shareParam && /^https:\/\/[a-z0-9-]+\.blogspot\.com\/?$/i.test(shareParam)) {
-      SITE_URL = shareParam.endsWith('/') ? shareParam : shareParam + '/';
-    }
+    const fromParam = toBlogUrl(new URLSearchParams(location.search).get('share'));
+    const fromReferrer = (window.self !== window.top && document.referrer) ? toBlogUrl(document.referrer) : null;
+    SITE_URL = fromParam || fromReferrer || DEFAULT_SITE_URL;
   } catch (e) {}
   const shareBtn = document.getElementById('shareBtn');
   const shareMenu = document.getElementById('shareMenu');
@@ -1193,7 +1272,7 @@ calcBtn.addEventListener('click', () => {
   const shareCopied = document.getElementById('shareCopied');
 
   if (shareBtn && shareMenu) {
-    shareWaBtn.href = 'https://wa.me/?text=' + encodeURIComponent('حاسبة الإيجار القديم والجديد - مبرمج ومصمم لصالح أ/ أسامة محمدي\n' + SITE_URL);
+    shareWaBtn.href = 'https://wa.me/?text=' + encodeURIComponent('حاسبة الإيجار القديم - مبرمج لصالح أ/ أسامة محمدي\n' + SITE_URL);
 
     shareBtn.addEventListener('click', (e) => {
       e.stopPropagation();
